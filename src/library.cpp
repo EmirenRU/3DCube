@@ -17,22 +17,23 @@ void Edge::addEdge(double x2, double y2, double z2){
 
 void Surface::loadData(){
     try {
-        initFileReader();
+        // initFileReader();
+        surfaceFile.open(path);
+
 
         surfaceFile >> n >> m; 
         
-        vList = new Vertex[n];
-        
-        for (int i = 0; i < n; i++){ vList[i] = new Vertex[m]; } 
-        
         for (int i = 0; i < n; i++){
+            std::vector<Vertex*> temp;
             for (int j = 0; j < m; j++){
                 double x, y, z;
                 
                 surfaceFile >> x >> y >> z;
 
-                vList[i][j] = new Vertex(x, y, z);
+                temp.push_back(new Vertex(x,y,z));
             }
+
+            vList.push_back(temp);
         }
     }
     catch(const std::exception& e)
@@ -49,5 +50,5 @@ Vertex::Vertex(double x, double y, double z){
 
 int Vertex::UID = 0;
 
-std::string    Edge::path = "Edge.txt";
-std::string Surface::path = "Surface.txt";
+// std::string    Edge::path = "Edge.txt";
+// std::string Surface::path = "Surface.txt";

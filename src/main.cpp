@@ -2,8 +2,10 @@
 #include "main.hpp"
 
 
+
 void controls(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+    
     if(action == GLFW_PRESS)
         if(key == GLFW_KEY_ESCAPE)
             glfwSetWindowShouldClose(window, GL_TRUE);
@@ -18,7 +20,7 @@ GLFWwindow* initWindow(const int resX, const int resY)
     }
     glfwWindowHint(GLFW_SAMPLES, 4);
 
-    GLFWwindow* window = glfwCreateWindow(resX, resY, "TEST", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(resX, resY, "Cube", NULL, NULL);
 
     if(window == NULL)
     {
@@ -40,8 +42,28 @@ GLFWwindow* initWindow(const int resX, const int resY)
     return window;
 }
 
+void changePerspective( double eyeX,
+                         double eyeY,
+                         double eyeZ,
+                         double centerX,
+                         double centerY,
+                         double centerZ,
+                         double upX,
+                         double upY,
+                         double upZ 
+                        )
+    {
+    gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
+}
+
+void changeCameraCoords(double x, double y, double z){
+        glTranslatef(x,y,z);
+}
+
 void display( GLFWwindow* window )
 {
+    Surface *surf = new Surface();
+    surf->loadData();
     while(!glfwWindowShouldClose(window))
     {
         // Scale to window size
@@ -53,27 +75,25 @@ void display( GLFWwindow* window )
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+
+  
+        // changePerspective();
+
         glMatrixMode(GL_PROJECTION_MATRIX);
         glLoadIdentity();
         gluPerspective( 60, (double)windowWidth / (double)windowHeight, 0.1, 100 );
 
         glMatrixMode(GL_MODELVIEW_MATRIX);
-        glTranslatef(0,0,-5);
+        changeCameraCoords(0,0,-4);
+        // changePerspective(0,0, -4, 0, 0, 1, 0, 0, 1);
+        
+
 
         
-//drawing
-        // for (double i = 0; i < 100; i++){
-        //     v3d* a = new v3d{i, i, i}; 
-        //     Vertex* v = new Vertex(1, a);
-        //     v->draw();
-        // }
 
-        Surface *surf = new Surface();
-        surf->loadData();
         surf->draw();
 
-  //      drawCube();
-//
+
         // Update Screen
         glfwSwapBuffers(window);
 

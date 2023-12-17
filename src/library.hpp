@@ -65,16 +65,13 @@ public:
 
 };
 
-
-
-
 class Surface {
 public:
     int n, m;
-    Vertex** vList;
+    std::vector<std::vector<Vertex*>> vList; 
     // Surface* next;
 
-    static std::string path;
+    std::string path  = "Surface.txt";
 
     void initFileReader()  { surfaceFile.open(path, ios::binary | ios::in | ios::out | ios::app); }
     void closeFileReader() { surfaceFile.close(); }
@@ -85,19 +82,30 @@ public:
 
     void setViewPoint(double px, double py, double pz) { viewpoint = { px, py, pz}; }
   
-    void drawLine(Vertex* &start, Vertex* &end) { glColor3f(1,1,1);  glBegin(GL_LINES); glVertex3f(start->worldCoord->x, start->worldCoord->y, start->worldCoord->z); glVertex3f(end->worldCoord->x, end->worldCoord->y, end->worldCoord->z); glEnd(); }
+    void drawLine(Vertex* &start, Vertex* &end) {
+        glColor3f(1,1,1);  
+        glBegin(GL_LINES); 
+        glVertex3f(start->worldCoord->x, start->worldCoord->y, start->worldCoord->z); 
+        glVertex3f(end->worldCoord->x, end->worldCoord->y, end->worldCoord->z); 
+        glEnd(); 
+        }
 
     void draw() {
+
         glPointSize(5.0); 
         
         for (int i = 0; i < n; i++){
             // 1 -> 2; 1->3; 2->4, 4->3
-            Vertex* a = &vList[i][0];
-            Vertex* b = &vList[i][1];
-            Vertex* c = &vList[i][2];
-            Vertex* d = &vList[i][3];
-
+            Vertex* a = vList[i][0];
+            Vertex* b = vList[i][1];
+            Vertex* c = vList[i][2];
+            Vertex* d = vList[i][3];
+            
             drawLine(a, b);
+            drawLine(a, d);
+            drawLine(c, d);
+            drawLine(c, b);
+
             // Vertex::draw(vList[i][1], vList[i][3]);
             // Vertex::draw(vList[i][2], vList[i][4]);
             // Vertex::draw(vList[i][3], vList[i][4]);
