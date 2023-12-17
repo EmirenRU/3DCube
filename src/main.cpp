@@ -1,4 +1,4 @@
-
+#include "library.hpp"
 #include "main.hpp"
 
 
@@ -50,7 +50,7 @@ void display( GLFWwindow* window )
         glViewport(0, 0, windowWidth, windowHeight);
 
         // Draw stuff
-        glClearColor(0.0, 0.8, 0.3, 1.0);
+        glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glMatrixMode(GL_PROJECTION_MATRIX);
@@ -62,6 +62,16 @@ void display( GLFWwindow* window )
 
         
 //drawing
+        // for (double i = 0; i < 100; i++){
+        //     v3d* a = new v3d{i, i, i}; 
+        //     Vertex* v = new Vertex(1, a);
+        //     v->draw();
+        // }
+
+        Surface *surf = new Surface();
+        surf->loadData();
+        surf->draw();
+
   //      drawCube();
 //
         // Update Screen

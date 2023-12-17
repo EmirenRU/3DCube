@@ -24,7 +24,7 @@ if( MSVC )
 endif()
 
 set(SOURCES 
-    src/main.hpp src/main.cpp src/library.hpp
+    src/main.hpp src/main.cpp src/library.hpp src/library.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
