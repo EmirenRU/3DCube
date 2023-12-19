@@ -85,8 +85,10 @@ void display( GLFWwindow* window )
 
         glMatrixMode(GL_MODELVIEW_MATRIX);
         changeCameraCoords(0,0,-4);
-        // changePerspective(0,0, -4, 0, 0, 1, 0, 0, 1);
-        
+        changePerspective(
+        0, 0, 2, 
+        0, -2, 0, 
+        0, 1, 0);
 
 
         
