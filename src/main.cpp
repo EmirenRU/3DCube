@@ -64,6 +64,7 @@ void display( GLFWwindow* window )
 {
     Surface *surf = new Surface();
     surf->loadData();
+    // surf->saveData();
     while(!glfwWindowShouldClose(window))
     {
         // Scale to window size
@@ -85,13 +86,12 @@ void display( GLFWwindow* window )
 
         glMatrixMode(GL_MODELVIEW_MATRIX);
         changeCameraCoords(0,0,-4);
-        changePerspective(
-        0, 0, 2, 
-        0, -2, 0, 
-        0, 1, 0);
-
-
-        
+        changePerspective
+        (
+        0,  0, 1,
+        0, -1, 0,
+        0,  1, 0 
+        );
 
         surf->draw();
 

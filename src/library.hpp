@@ -9,10 +9,6 @@ struct v3d{
     v3d(double dx,double dy, double dz) : x(dx), y(dy), z(dz) { }
 } ;
 
-typedef struct {
-    double x,y;
-} v2d;
-
 class Vertex{
 public:
     static int UID;
@@ -71,11 +67,12 @@ public:
     std::vector<std::vector<Vertex*>> vList; 
     // Surface* next;
 
-    std::string path  = "Surface.txt";
+    std::string path  = "Surface.dat";
 
     void initFileReader()  { surfaceFile.open(path, ios::binary | ios::in | ios::out | ios::app); }
     void closeFileReader() { surfaceFile.close(); }
     void loadData();
+    void saveData();
 
 
     static v3d viewpoint;

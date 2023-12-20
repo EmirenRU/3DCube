@@ -10,7 +10,6 @@ get_filename_component(PROJECTNAME ${CMAKE_CURRENT_LIST_DIR} NAME)
 cmake_policy(SET CMP0072 NEW)
 set(OpenGL_GL_PREFERENCE "GLVND")
 
-
 set( GLFW_BUILD_DOCS OFF CACHE BOOL  "GLFW lib only" )
 set( GLFW_INSTALL OFF CACHE BOOL  "GLFW lib only" )
 
@@ -25,8 +24,6 @@ include_directories(include/glfw/include)
 
 add_subdirectory(include/glm)
 
-
-
 set(CMAKE_PREFIX_PATH include/glfw ${CMAKE_PREFIX_PATH})
 
 if( MSVC )
@@ -37,12 +34,9 @@ set(SOURCES
     src/main.hpp src/main.cpp src/library.hpp src/library.cpp
 )
 
-configure_file(${CMAKE_SOURCE_DIR}/Surface.txt ${CMAKE_BINARY_DIR}/Surface.txt COPYONLY)
+# configure_file(${CMAKE_SOURCE_DIR}/Surface.dat ${CMAKE_BINARY_DIR}/Surface.dat)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
-
-
-
 
 if(OPENGL_FOUND)
     include_directories(${OPENGL_INCLUDE_DIRS}  )
