@@ -44,38 +44,6 @@ void Surface::loadData(){
     closeFileReader();
 }
 
-void Surface::saveData(){
-    std::fstream surfaceFile;
-    std::ofstream fWriter; // Use ofstream for writing to a file
-    std::string path = "Surface.txt";
-    std::string file = "Surface.dat";
-
-    surfaceFile.open(path);
-    fWriter.open(file, std::ios::out);
-
-    if (!surfaceFile.is_open() || !fWriter.is_open()) {
-        std::cerr << "Error opening files." << std::endl;
-        return;
-    }
-
-    int n, m;
-    int a, b, c;
-    surfaceFile >> n >> m;
-    fWriter << n << " " << m << std::endl;
-    
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            surfaceFile >> a >> b >> c;
-            fWriter << a << " " << b << " " << c << "\n";
-        }
-    }
-
-    fWriter.close();
-    surfaceFile.close();
-
-}
-
 Vertex::Vertex(double x, double y, double z){
     worldCoord = new v3d(x,y,z);
 }

@@ -72,7 +72,6 @@ public:
     void initFileReader()  { surfaceFile.open(path, ios::binary | ios::in | ios::out | ios::app); }
     void closeFileReader() { surfaceFile.close(); }
     void loadData();
-    void saveData();
 
 
     static v3d viewpoint;
