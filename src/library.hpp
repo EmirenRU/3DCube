@@ -1,7 +1,7 @@
 #include "main.hpp"
 #pragma once
 
-static std::fstream surfaceFile;
+static std::fstream file;
 
 struct v3d{
     double x,y,z;

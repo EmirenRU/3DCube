@@ -25,21 +25,21 @@ void Surface::draw(){
     }
 
 void Surface::loadData(){
-    surfaceFile.open(path);
-    if (!surfaceFile.is_open()){ return; }
+    file.open(path);
+    if (!file.is_open()){ return; }
         
-    surfaceFile >> n >> m; 
+    file >> n >> m; 
     for (int i = 0; i < n; i++){
         std::vector<Vertex*> temp;
         for (int j = 0; j < m; j++){
             double x, y, z;
-            surfaceFile >> x >> y >> z;
+            file >> x >> y >> z;
 
             temp.push_back(new Vertex(x,y,z));
         }
         vList.push_back(temp);
     }
-    surfaceFile.close();
+    file.close();
 }
 
 Vertex::Vertex(double x, double y, double z){ worldCoord = new v3d(x,y,z); }
