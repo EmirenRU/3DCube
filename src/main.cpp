@@ -1,8 +1,6 @@
 #include "library.hpp"
 #include "main.hpp"
 
-
-
 void controls(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     
@@ -52,54 +50,39 @@ void changePerspective( double eyeX,
                          double upY,
                          double upZ 
                         )
-    {
-    gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
-}
+{ gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ); }
 
-void changeCameraCoords(double x, double y, double z){
-        glTranslatef(x,y,z);
-}
+void setScale(double x, double y, double z){ glScalef(x,y,z); }
 
-void display( GLFWwindow* window )
-{
+void changeCameraCoords(double x, double y, double z){ glTranslatef(x,y,z); }
+
+void display( GLFWwindow* window ) {
     Surface *surf = new Surface();
     surf->loadData();
-    // surf->saveData();
+
     while(!glfwWindowShouldClose(window))
     {
-        // Scale to window size
         GLint windowWidth, windowHeight;
         glfwGetWindowSize(window, &windowWidth, &windowHeight);
         glViewport(0, 0, windowWidth, windowHeight);
 
-        // Draw stuff
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
-  
-        // changePerspective();
 
         glMatrixMode(GL_PROJECTION_MATRIX);
         glLoadIdentity();
         gluPerspective( 60, (double)windowWidth / (double)windowHeight, 0.1, 100 );
 
         glMatrixMode(GL_MODELVIEW_MATRIX);
-        changeCameraCoords(0,0,-4);
-        changePerspective
-        (
+        changeCameraCoords(2,0,-4);
+        changePerspective(
         0,  0, 1,
-        0, -1, 0,
-        0,  1, 0 
-        );
+        1, -1, 0,
+        0,  1, 0  );
 
         surf->draw();
 
-
-        // Update Screen
         glfwSwapBuffers(window);
-
-        // Check for any input, or window movement
         glfwPollEvents();
     }
 }

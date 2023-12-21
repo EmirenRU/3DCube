@@ -1,54 +1,46 @@
 #include "library.hpp"
 
-Edge::Edge(double x1, double y1, double z1, double x2, double y2, double z2){
-    v3d *a = new v3d( x1, y1, z1);
-    v3d *b = new v3d(x2, y2, z2);
-
-    Vertex* va = new Vertex(1, a);
-    Vertex* vb = new Vertex(1, b);
-
-    this->startV = va;
-    this->endV = vb;
+Vertex::Vertex(int id, v3d* &wCoord ){
+    this->id = id; 
+    this->worldCoord = wCoord; 
 }
 
-void Edge::addEdge(double x2, double y2, double z2){
-
+void Vertex::draw(Vertex* &end) { 
+    glColor3f(1,1,1);  
+    glBegin(GL_LINES); 
+    glVertex3f(this->worldCoord->x, this->worldCoord->y, this->worldCoord->z); 
+    glVertex3f(end->worldCoord->x, end->worldCoord->y, end->worldCoord->z); 
+    glEnd(); 
 }
 
-void Surface::loadData(){
-    try {
-        // initFileReader();
-        surfaceFile.open(path);
-
-
-        surfaceFile >> n >> m; 
+void Surface::draw(){
+        glPointSize(5.0); 
         
         for (int i = 0; i < n; i++){
-            std::vector<Vertex*> temp;
-            for (int j = 0; j < m; j++){
-                double x, y, z;
-                
-                surfaceFile >> x >> y >> z;
-
-                temp.push_back(new Vertex(x,y,z));
-            }
-
-            vList.push_back(temp);
-        }
+            drawLine((Vertex*&) vList[i][0], (Vertex*&) vList[i][1]);
+            drawLine((Vertex*&) vList[i][0], (Vertex*&) vList[i][3]);
+            drawLine((Vertex*&) vList[i][2], (Vertex*&) vList[i][3]);
+            drawLine((Vertex*&) vList[i][2], (Vertex*&) vList[i][1]);
+        }        
     }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
+
+void Surface::loadData(){
+    surfaceFile.open(path);
+    if (!surfaceFile.is_open()){ return; }
         
+    surfaceFile >> n >> m; 
+    for (int i = 0; i < n; i++){
+        std::vector<Vertex*> temp;
+        for (int j = 0; j < m; j++){
+            double x, y, z;
+            surfaceFile >> x >> y >> z;
+
+            temp.push_back(new Vertex(x,y,z));
+        }
+        vList.push_back(temp);
     }
-    closeFileReader();
+    surfaceFile.close();
 }
 
-Vertex::Vertex(double x, double y, double z){
-    worldCoord = new v3d(x,y,z);
-}
+Vertex::Vertex(double x, double y, double z){ worldCoord = new v3d(x,y,z); }
 
-int Vertex::UID = 0;
-
-// std::string    Edge::path = "Edge.txt";
-// std::string Surface::path = "Surface.txt";
