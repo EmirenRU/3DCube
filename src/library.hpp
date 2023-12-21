@@ -29,8 +29,6 @@ public:
     int n, m;
     std::vector<std::vector<Vertex*>> vList; 
 
-    void loadData();
-  
-    void drawLine(Vertex* &start, Vertex* &end) { start->draw(end); }
+    void loadData();  
     void draw();
 };

@@ -17,10 +17,10 @@ void Surface::draw(){
         glPointSize(5.0); 
         
         for (int i = 0; i < n; i++){
-            drawLine((Vertex*&) vList[i][0], (Vertex*&) vList[i][1]);
-            drawLine((Vertex*&) vList[i][0], (Vertex*&) vList[i][3]);
-            drawLine((Vertex*&) vList[i][2], (Vertex*&) vList[i][3]);
-            drawLine((Vertex*&) vList[i][2], (Vertex*&) vList[i][1]);
+            vList[i][0]->draw( (Vertex*&) vList[i][1]);
+            vList[i][0]->draw( (Vertex*&) vList[i][3]);
+            vList[i][2]->draw( (Vertex*&) vList[i][3]);
+            vList[i][2]->draw(  (Vertex*&) vList[i][1]);
         }        
     }
 
