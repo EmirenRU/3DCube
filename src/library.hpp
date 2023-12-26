@@ -10,10 +10,10 @@ struct v3d {
 
 class Vertex {
 public:
-    short id;
+    unsigned int id;
     v3d* worldCoord;
 
-    Vertex(GLdouble x, GLdouble y, GLdouble z) : worldCoord( new v3d(x,y,z)) {}
+    Vertex(GLdouble x, GLdouble y, GLdouble z) : worldCoord( new v3d(x,y,z)) { id++;}
 
     void setId(int id) { this->id = id; }
     void setWorldCoord(v3d* wCoord) { this->worldCoord = wCoord; }
@@ -34,9 +34,11 @@ public:
 
 class Cube {
 private:
-    GLuint vao, vbo;
+    GLuint vao, vbo, ebo;
     vector<Vertex*> vertices; 
-    static const GLushort  cubeConnectivity[];
+    vector<GLdouble> vertexData;
+    std::vector<GLushort> cubeConnectivity;
+
     short numVertices = 24;
     void loadVertices(const std::string& filePath);
     void setupBuffers();    
@@ -45,6 +47,5 @@ public:
     Cube(const std::string& filePath);
     short getNumVertices();
     void draw();
-
-
+    ~Cube();
 };

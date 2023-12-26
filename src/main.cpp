@@ -86,6 +86,11 @@ GLFWwindow* initWindow(const int resX, const int resY)
     }
 
     glfwMakeContextCurrent(window);
+
+    // .............
+    glewExperimental = GL_TRUE;
+    glewInit();
+    // ..............
     glfwSetKeyCallback(window, controls);
 
     printf("Renderer: %s\n", glGetString(GL_RENDERER));
@@ -154,8 +159,9 @@ void display( GLFWwindow* window ) {
 
         glDepthRange(0.01, 1.0);
 
-        glEnable(GL_CULL_FACE);     // Cull back facing polygons
-        glCullFace(GL_FRONT_AND_BACK);
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
+        glFrontFace(GL_CCW);
         
         cube.draw();
 
