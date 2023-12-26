@@ -1,34 +1,53 @@
 #include "main.hpp"
-#pragma once
+#include <fstream>
 
 static std::fstream file;
 
-struct v3d{
-    double x,y,z;
-    v3d(double dx,double dy, double dz) : x(dx), y(dy), z(dz) { }
-} ;
+struct v3d {
+    GLdouble x, y, z;
+    v3d(GLdouble dx, GLdouble dy, GLdouble dz) : x(dx), y(dy), z(dz) { }
+};
 
-class Vertex{
+class Vertex {
 public:
-    int id;
+    short id;
     v3d* worldCoord;
-    
-    Vertex(int id, v3d* &wCoord );
-    Vertex(double x, double y, double z);
 
-    void setId(int id)                  { this->id = id; }
-    void setWorldCoord(v3d* &wCoord)    { this->worldCoord = wCoord; }
+    Vertex(GLdouble x, GLdouble y, GLdouble z) : worldCoord( new v3d(x,y,z)) {}
+
+    void setId(int id) { this->id = id; }
+    void setWorldCoord(v3d* wCoord) { this->worldCoord = wCoord; }
 
     void draw(Vertex* &end);
 };
 
-class Surface {
+class Polygon {
+private:
+    Vertex* vertices[3]; 
+
 public:
-    const std::string path  = "Surface.dat";
+    Polygon(Vertex* v0, Vertex* v1, Vertex* v2) {
+        vertices[0] = v0;
+        vertices[1] = v1;
+        vertices[2] = v2;
+    }
 
-    int n, m;
-    std::vector<std::vector<Vertex*>> vList; 
+    void draw();
+    void draw(Vertex a,Vertex b,Vertex c);
+};
 
-    void loadData();  
+class Cube {
+private:
+    Vertex* vertices[24]; 
+    static const GLushort  cubeConnectivity[];
+    
+
+public:
+   Cube(const std::string& filePath){
+        loadVertices(filePath);
+   }
+
+    void loadVertices(const std::string& filePath);
+
     void draw();
 };

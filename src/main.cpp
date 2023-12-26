@@ -33,10 +33,12 @@ GLFWwindow* initWindow(const int resX, const int resY)
     printf("Renderer: %s\n", glGetString(GL_RENDERER));
     printf("OpenGL version supported %s\n", glGetString(GL_VERSION));
 
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    glDisable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
+
+    glEnable(GL_DEPTH_TEST);    // Enable the depth buffer
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); // Ask for nicest perspective correction
+
+    glEnable(GL_CULL_FACE);     // Cull back facing polygons
+    glCullFace(GL_FRONT);
     return window;
 }
 
@@ -57,30 +59,29 @@ void setScale(double x, double y, double z){ glScalef(x,y,z); }
 void changeCameraCoords(double x, double y, double z){ glTranslatef(x,y,z); }
 
 void display( GLFWwindow* window ) {
-    Surface *surf = new Surface();
-    surf->loadData();
 
+    Cube cube("Surface.dat");
+    
     while(!glfwWindowShouldClose(window))
     {
         GLint windowWidth, windowHeight;
         glfwGetWindowSize(window, &windowWidth, &windowHeight);
         glViewport(0, 0, windowWidth, windowHeight);
 
+
         glClearColor(0.0, 0.0, 0.0, 1.0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glMatrixMode(GL_PROJECTION_MATRIX);
         glLoadIdentity();
-        gluPerspective( 60, (double)windowWidth / (double)windowHeight, 0.1, 100 );
+        gluPerspective( 90, (double)windowWidth / (double)windowHeight, 0.1, 100 );
 
         glMatrixMode(GL_MODELVIEW_MATRIX);
-        changeCameraCoords(2,0,-4);
-        changePerspective(
-        0,  0, 1,
-        1, -1, 0,
-        0,  1, 0  );
-
-        surf->draw();
+        changeCameraCoords(0,0,-2);
+        changePerspective( 0, -1, 0, 0, 2, 0, 0,  0, 1);
+        glDepthRange(0.01, 1.0);
+        cube.draw();
+        
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -89,7 +90,7 @@ void display( GLFWwindow* window ) {
 
 int main(int argc, char** argv)
 {
-    GLFWwindow* window = initWindow(1024, 620);
+    GLFWwindow* window = initWindow(1000, 1000);
     if( NULL != window )
     {
         display( window );
