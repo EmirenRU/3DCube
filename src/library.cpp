@@ -68,7 +68,7 @@ void Cube::setupBuffers() {
         }
     }   
 
-    glGenBuffers(1, &vbo);  // Generate a buffer ID
+    glGenBuffers(3, &vbo);  // Generate a buffer ID
     glBindBuffer(GL_ARRAY_BUFFER, vbo);  // Bind the buffer
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLdouble) * vertexData.size(), &vertexData.front(), GL_STATIC_DRAW);
 
