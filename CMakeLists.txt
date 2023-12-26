@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(Cube)
 
 find_package( OpenGL REQUIRED )
+find_package( GLEW REQUIRED)
 
 get_filename_component(PROJECTNAME ${CMAKE_CURRENT_LIST_DIR} NAME)
 
@@ -41,7 +42,7 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 
 if(OPENGL_FOUND)
     include_directories(${OPENGL_INCLUDE_DIRS}  )
-    target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} glfw m  glm::glm)
+    target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES} glfw m  glm::glm GLEW::GLEW)
 else()
     message(FATAL_ERROR "OpenGL not found")
 endif()

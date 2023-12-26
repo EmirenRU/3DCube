@@ -19,6 +19,7 @@ public:
     void setWorldCoord(v3d* wCoord) { this->worldCoord = wCoord; }
 
     void draw(Vertex* &end);
+    vector<GLdouble> data();
 };
 
 class Polygon {
@@ -26,28 +27,24 @@ private:
     Vertex* vertices[3]; 
 
 public:
-    Polygon(Vertex* v0, Vertex* v1, Vertex* v2) {
-        vertices[0] = v0;
-        vertices[1] = v1;
-        vertices[2] = v2;
-    }
-
+    Polygon(Vertex* v0, Vertex* v1, Vertex* v2);
     void draw();
     void draw(Vertex a,Vertex b,Vertex c);
 };
 
 class Cube {
 private:
-    Vertex* vertices[24]; 
+    GLuint vao, vbo;
+    vector<Vertex*> vertices; 
     static const GLushort  cubeConnectivity[];
-    
+    short numVertices = 24;
+    void loadVertices(const std::string& filePath);
+    void setupBuffers();    
 
 public:
-   Cube(const std::string& filePath){
-        loadVertices(filePath);
-   }
-
-    void loadVertices(const std::string& filePath);
-
+    Cube(const std::string& filePath);
+    short getNumVertices();
     void draw();
+
+
 };
