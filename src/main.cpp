@@ -132,7 +132,7 @@ void changeCameraCoords(double x, double y, double z) {
 
 void display( GLFWwindow* window ) {
 
-    Cube cube("Surface.dat");
+    Cube cube("Surface.dat", "CubeConnectivity.dat");
 
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetCursorPosCallback(window, mouseCallback);

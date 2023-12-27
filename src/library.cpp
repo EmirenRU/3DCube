@@ -7,10 +7,8 @@ Polygon::Polygon(Vertex* v0, Vertex* v1, Vertex* v2) {
 }
 
 void Cube::draw() {
-    glClear(GL_COLOR_BUFFER_BIT);
-
     glBindVertexArray(vbo);
-    glDrawElements(GL_TRIANGLES, 6 * 6, GL_UNSIGNED_SHORT, BUFFER_OFFSET(0));
+    glDrawElements(GL_TRIANGLES, 6 * 6, GL_UNSIGNED_SHORT, NULL);
     glBindVertexArray(0);
 }
 
@@ -18,21 +16,12 @@ vector<GLdouble> Vertex::data(){
     return {worldCoord->x, worldCoord->y, worldCoord->z};
 }
 
-Cube::Cube(const std::string& filePath){
-    cubeConnectivity =  {
-        0, 1, 2,  2, 1, 3,    /* front */
-        4, 5, 6,  6, 5, 7,    /* back */
-        8, 9,10, 10, 9,11,    /* left */
-        12,13,14, 14,13,15,   /* right */
-        16,17,18, 18,17,19,   /* top */
-        20,21,22, 22,21,23    /* bottom */
-    };
-
-    loadVertices(filePath);
+Cube::Cube(const std::string& filePathVertics, const std::string& filePathConnectivity){
+    loadVertices(filePathVertics, filePathConnectivity);
     setupBuffers();
 }   
 
-void Cube::loadVertices(const std::string& filePath) {
+void Cube::loadVertices(const std::string& filePath,  const std::string& filePathConnectivity) {
     std::ifstream file(filePath);
     if (!file.is_open()) {
         std::cerr << "Error opening file: " << filePath << std::endl;
@@ -53,6 +42,19 @@ void Cube::loadVertices(const std::string& filePath) {
     }
 
     file.close();
+
+    file.open(filePathConnectivity);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filePath << std::endl;
+        return;
+    }
+
+    GLushort temp;
+
+    while(file >> temp){ cubeConnectivity.push_back(temp); }
+
+    file.close();
+    
 }
 
 void Cube::setupBuffers() {
@@ -72,13 +74,13 @@ void Cube::setupBuffers() {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);  // Bind the buffer
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLdouble) * vertexData.size(), &vertexData.front(), GL_STATIC_DRAW);
 
-    glGenBuffers(1, &ebo);
+    glGenBuffers(3, &ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, cubeConnectivity.size() * sizeof(GLuint), &cubeConnectivity.front(), GL_STATIC_DRAW);
  
     
-    glVertexAttribPointer(0, 3, GL_DOUBLE, GL_FALSE, sizeof(GLdouble) * 3, BUFFER_OFFSET(0));
-    glVertexAttribPointer(2,4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(GLdouble), BUFFER_OFFSET(0));
+    glVertexAttribPointer(0, 3, GL_DOUBLE, GL_TRUE, sizeof(GLdouble) * 3, NULL);
+    glVertexAttribPointer(2, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(GLubyte), NULL);
     
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(2);

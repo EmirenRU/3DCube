@@ -37,6 +37,8 @@ set(SOURCES
 )
 
 configure_file(${CMAKE_SOURCE_DIR}/Surface.dat ${CMAKE_BINARY_DIR}/Surface.dat)
+configure_file(${CMAKE_SOURCE_DIR}/CubeConnectivity.dat ${CMAKE_BINARY_DIR}/CubeConnectivity.dat)
+
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

@@ -40,11 +40,11 @@ private:
     std::vector<GLushort> cubeConnectivity;
 
     short numVertices = 24;
-    void loadVertices(const std::string& filePath);
+    void loadVertices(const std::string& filePath,  const std::string& filePathConnectivity);
     void setupBuffers();    
 
 public:
-    Cube(const std::string& filePath);
+    Cube(const std::string& filePathVertics, const std::string& filePathConnectivity);
     short getNumVertices();
     void draw();
     ~Cube();

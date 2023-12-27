@@ -22,7 +22,5 @@
 #include <glm/ext/scalar_constants.hpp> // glm::pi
 #include <glm/gtc/type_ptr.hpp>
 
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
-
 using namespace std;
 #endif //_MAIN_HPP
