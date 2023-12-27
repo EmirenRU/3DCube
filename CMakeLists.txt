@@ -36,8 +36,10 @@ set(SOURCES
     src/main.hpp src/main.cpp src/library.hpp src/library.cpp
 )
 
-configure_file(${CMAKE_SOURCE_DIR}/Surface.dat ${CMAKE_BINARY_DIR}/Surface.dat)
+configure_file(${CMAKE_SOURCE_DIR}/Cube.dat ${CMAKE_BINARY_DIR}/Surface.dat)
 configure_file(${CMAKE_SOURCE_DIR}/CubeConnectivity.dat ${CMAKE_BINARY_DIR}/CubeConnectivity.dat)
+configure_file(${CMAKE_SOURCE_DIR}/CubeColor.dat ${CMAKE_BINARY_DIR}/CubeColor.dat)
+
 
 
 add_executable(${PROJECT_NAME} ${SOURCES})

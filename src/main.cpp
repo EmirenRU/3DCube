@@ -11,7 +11,6 @@ float yaw = -90.0f;
 float pitch = 0.0f;
 
 void processInput(GLFWwindow* window) {
-    // Camera movement
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         cameraPosition += cameraSpeed * cameraFront;
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -87,10 +86,9 @@ GLFWwindow* initWindow(const int resX, const int resY)
 
     glfwMakeContextCurrent(window);
 
-    // .............
     glewExperimental = GL_TRUE;
     glewInit();
-    // ..............
+
     glfwSetKeyCallback(window, controls);
 
     printf("Renderer: %s\n", glGetString(GL_RENDERER));
@@ -102,6 +100,7 @@ GLFWwindow* initWindow(const int resX, const int resY)
 
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);  
+
 
     return window;
 }
@@ -121,10 +120,6 @@ glm::mat4 scaleMatrix(double x, double y, double z) {
     return glm::scale(glm::mat4(1.0f), glm::vec3(x, y, z));
 }
 
-glm::mat4 translateMatrix(double x, double y, double z) {
-    return glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z));
-}
-
 void changeCameraCoords(double x, double y, double z) {
     glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z));
     glMultMatrixf(glm::value_ptr(translationMatrix));
@@ -132,7 +127,7 @@ void changeCameraCoords(double x, double y, double z) {
 
 void display( GLFWwindow* window ) {
 
-    Cube cube("Surface.dat", "CubeConnectivity.dat");
+    Cube cube("Surface.dat", "CubeConnectivity.dat", "CubeColor.dat");
 
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetCursorPosCallback(window, mouseCallback);

@@ -5,6 +5,7 @@ static std::fstream file;
 
 struct v3d {
     GLdouble x, y, z;
+    glm::vec4 color;
     v3d(GLdouble dx, GLdouble dy, GLdouble dz) : x(dx), y(dy), z(dz) { }
 };
 
@@ -18,33 +19,22 @@ public:
     void setId(int id) { this->id = id; }
     void setWorldCoord(v3d* wCoord) { this->worldCoord = wCoord; }
 
-    void draw(Vertex* &end);
-    vector<GLdouble> data();
-};
-
-class Polygon {
-private:
-    Vertex* vertices[3]; 
-
-public:
-    Polygon(Vertex* v0, Vertex* v1, Vertex* v2);
-    void draw();
-    void draw(Vertex a,Vertex b,Vertex c);
+    vector<GLdouble> data() { return {worldCoord->x, worldCoord->y, worldCoord->z}; }
 };
 
 class Cube {
 private:
     GLuint vao, vbo, ebo;
-    vector<Vertex*> vertices; 
+    vector<Vertex*> vertices;  
     vector<GLdouble> vertexData;
     std::vector<GLushort> cubeConnectivity;
-
-    short numVertices = 24;
-    void loadVertices(const std::string& filePath,  const std::string& filePathConnectivity);
+    GLubyte numVertices;
+    
+    void loadVertices(const std::string& filePath,  const std::string& filePathConnectivity, const std::string& filePathColor);
     void setupBuffers();    
 
 public:
-    Cube(const std::string& filePathVertics, const std::string& filePathConnectivity);
+    Cube(const std::string& filePathVertics, const std::string& filePathConnectivity, const std::string& filePathColor);
     short getNumVertices();
     void draw();
     ~Cube();
